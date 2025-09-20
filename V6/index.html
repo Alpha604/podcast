@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les petits micros</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <button class="btn-acc">Accueil</button>
+<header>
+  <h1>Le Studio de Elèves</h1>
+</header>
+
+<!-- Filtres et tri -->
+<div class="controls">
+  <div class="filters">
+  </div>
+  <div class="sort">
+    <label for="sortSelect">Trier par : </label>
+    <select id="sortSelect">
+      <option value="date">Date (récent → ancien)</option>
+      <option value="title">Nom (A → Z)</option>
+      <option value="category">Catégorie</option>
+    </select>
+  </div>
+</div>
+
+<main id="podcastGrid" class="grid"></main>
+
+<!-- Player flottant réductible -->
+<div id="player" class="closed">
+  <div class="player-header">
+    <span id="playerTitle">Aucun podcast</span>
+    <button id="closePlayer"><i class="fas fa-chevron-down"></i></button>
+  </div>
+  <div class="player-body">
+    <div class="player-info">
+      <img id="podcastCover" src="default.jpg" alt="cover">
+      <h2 id="podcastTitle">Aucun podcast</h2>
+    </div>
+    <div class="player-controls">
+      <button id="prev"><i class="fas fa-backward"></i></button>
+      <button id="playPause"><i class="fas fa-play"></i></button>
+      <button id="next"><i class="fas fa-forward"></i></button>
+      <div class="progress-bar">
+        <div id="progressFill"></div>
+      </div>
+      <span id="time">0:00 / 0:00</span>
+    </div>
+  </div>
+</div>
+
+<audio id="audio"></audio>
+
+<script src="podcasts.js"></script>
+<script src="script.js"></script>
+<script src="Setings/footer.js"></script>
+<script src="Setings/loader.js"></script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+/* Reset de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #121212;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-size: 18px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 25px;
+  background: #1f1f1f;
+  color: #1db954;
+  font-size: clamp(1.2em, 2vw, 2em); /* plus petit que ta version */
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+header h1 {
+  margin: 0;
+  font-size: clamp(1em, 4vw, 2em);  /* descend plus bas que 1.5em */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+/* Filtres + tri */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10px 15px;
+  gap: 10px;
+}
+
+.filters {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.filters button {
+  background: linear-gradient(145deg, #1db954, #1ed760);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.filters button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+  background: linear-gradient(145deg, #1ed760, #1db954);
+}
+
+.filters button.active {
+  background: #1db954;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+  transform: translateY(-2px);
+}
+
+/* Sort dropdown */
+.sort {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#sortSelect {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  background: #1f1f1f;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+#sortSelect:hover {
+  background: #1db954;
+  color: #000;
+}
+
+/* Grille */
+.grid {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  justify-content: start;
+}
+
+.card {
+  max-width: 250px;
+  background: #1e1e1e;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1/1.4;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative; /* 👈 important pour positionner le "new" */
+}
+
+
+.card img {
+  width: 100%;
+  height: 65%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.card h2 {
+  color: #1db954;
+  margin: 8px 5px 0 5px;
+  font-size: 1.2em;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.card p {
+  margin: 4px 5px;
+  font-size: 0.95em;
+  opacity: 0.85;
+  text-align: center;
+  flex-shrink: 0;
+
+  display: -webkit-box;       /* nécessaire pour line-clamp */
+  -webkit-line-clamp: 3;      /* nombre de lignes visibles */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.card .category {
+  margin-top: auto;
+  font-size: 0.85em;
+  color: #aaa;
+  text-align: center;
+}
+
+.card .new {
+  position: absolute;  /* 👈 badge flottant */
+  top: 8px;
+  right: 8px;
+  background: #ff4d4f;
+  color: #fff;
+  font-size: 0.8em;
+  padding: 4px 7px;
+  border-radius: 6px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.6);
+}
+
+/* Player flottant */
+#player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #1f1f1fdd;
+  color: #fff;
+  pointer-events: auto;
+  transition: 0.3s;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+#player.closed .player-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s;
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+#closePlayer {
+  background: transparent;
+  color: #fff;
+  font-size: 1.2em;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#closePlayer:hover {
+  color: #1db954;
+}
+
+#closePlayer i {
+  transition: transform 0.3s ease;
+}
+
+#player.closed #closePlayer i {
+  transform: rotate(180deg);
+}
+
+.player-body {
+  padding: 10px 20px;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.player-info img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.player-info h2 {
+  font-size: 1.3em;
+}
+
+.player-info p {
+  font-size: 1em;
+  opacity: 0.9;
+  margin-top: 3px;
+  text-align: left;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.player-controls button {
+  background: linear-gradient(145deg, #1db954, #1ed760);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5em;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.player-controls button:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.5);
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #333;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+
+#progressFill {
+  height: 100%;
+  width: 0%;
+  background: #1db954;
+  transition: width 0.1s linear;
+}
+
+#time {
+  font-size: 0.85em;
+  color: #aaa;
+  margin-left: 5px;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .card h2 { font-size: 1.1em; }
+  .card p { font-size: 0.85em; }
+  .player-info img { width: 80px; height: 80px; }
+  .player-controls button { width: 45px; height: 45px; font-size: 1.4em; }
+}
+
+@media (max-width: 700px) {
+  .grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+  .card h2 { font-size: 1em; }
+  .card p { font-size: 0.8em; }
+  .player-info img { width: 70px; height: 70px; }
+  .player-controls button { width: 40px; height: 40px; font-size: 1.3em; }
+}
+
+@media (max-width: 500px) {
+  .grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .card h2 { font-size: 0.95em; }
+  .card p { font-size: 0.75em; }
+  .player-info img { width: 60px; height: 60px; }
+  .player-controls button { width: 35px; height: 35px; font-size: 1.2em; }
+}
+
+
+.btn-acc {
+  background-color: #1db954;
+  border: none;
+}

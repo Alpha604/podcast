@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Erreur - Aucune mise à jour</title>
+  <style>
+    body {
+      background-color: #1e1e2f;
+      color: #f5f5f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      margin-bottom: 1rem;
+      color: #ff4c4c; /* rouge pour erreur */
+    }
+
+    p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: #d1d1d1;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+
+    .icon {
+      font-size: clamp(3rem, 10vw, 5rem);
+      margin-bottom: 1rem;
+      animation: pulse 1.5s infinite;
+      color: #ff4c4c;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    button {
+      background-color: #3b3b5e;
+      color: #f5f5f5;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 160px;
+    }
+
+    button:hover {
+      background-color: #ff4c4c;
+      color: #000;
+      transform: scale(1.05);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: clamp(0.7rem, 2vw, 0.9rem);
+      color: #777;
+      text-align: center;
+      width: 100%;
+    }
+
+    .a {
+        margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="icon">❌</div>
+  <h1>Aucune mise à jour trouvée</h1>
+  <p>La version demandée n’existe pas ou n’est pas encore disponible.<br>
+  Vérifiez plus tard ou revenez à la page principale.</p>
+  
+  <a class="a" href="../index.html"><button>Réessayer</button></a>
+    <a class="a" href="https://github.com/Alpha604/podcast" target="_blank">
+    <button>
+        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/github.png" alt="GitHub" style="vertical-align: middle; margin-right: 8px;">
+        GitHub
+    </button>
+    </a>
+
+
+  <footer>© Roméo | 2025 - Le Studio des Élèves.</footer>
+</body>
+</html>

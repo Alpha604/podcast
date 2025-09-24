@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mise à jour prête</title>
+  <style>
+    body {
+      background-color: #1e1e2f;
+      color: #f5f5f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      margin-bottom: 1rem;
+      color: #4cff4c;
+    }
+
+    p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: #d1d1d1;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+
+    .icon {
+      font-size: clamp(3rem, 10vw, 5rem);
+      margin-bottom: 1rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    button {
+      background-color: #3b3b5e;
+      color: #f5f5f5;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 160px;
+    }
+
+    button:hover {
+      background-color: #4cff4c;
+      color: #000;
+      transform: scale(1.05);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: clamp(0.7rem, 2vw, 0.9rem);
+      color: #777;
+      text-align: center;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="icon">✅</div>
+  <h1>Mise à jour prête !</h1>
+  <p>La nouvelle version de votre site est disponible.<br>
+  Cliquez ci-dessous pour y accéder 🚀</p>
+  
+  <div id="btnContainer"></div>
+
+  <footer>© Roméo | 2025 - Le Studio des Élèves.</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const updateDiv = document.getElementById("btnContainer");
+
+  // Récupérer l’URL actuelle
+  const currentPath = window.location.pathname; // ex: /site/V8/index.html
+  const match = currentPath.match(/V(\d+)\/index\.html$/);
+
+  if (match) {
+    const currentVersion = parseInt(match[1], 10); 
+    const nextVersion = currentVersion + 1;
+    const nextUrl = currentPath.replace(`V${currentVersion}/index.html`, `V${nextVersion}/index.html`);
+
+    // Vérifier si la page existe
+    fetch(nextUrl, { method: "HEAD" })
+      .then(response => {
+        if (response.ok) {
+          updateDiv.innerHTML = `<a href="${nextUrl}"><button>Nouvelle version disponible : V${nextVersion}</button></a>`;
+        } else {
+          // Redirige vers le chemin courant + "Setings/eror"
+          const errorUrl = currentPath.replace("index.html", "Setings/eror.html");
+          window.location.href = errorUrl;
+        }
+      })
+      .catch(() => {
+        const errorUrl = currentPath.replace("index.html", "Setings/eror.html");
+        window.location.href = errorUrl;
+      });
+  } else {
+    const errorUrl = currentPath.replace(/[^/]*$/, "Setings/eror.html");
+    window.location.href = errorUrl;
+  }
+});
+</script>
+
+
+</body>
+</html>

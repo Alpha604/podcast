@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Échecs Icy Sea - Vanilla JS</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #0d1b2a;
+      height: 100vh;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    #board {
+      display: grid;
+      grid-template-columns: repeat(8, 80px);
+      grid-template-rows: repeat(8, 80px);
+      border: 4px solid #333;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    }
+    .square {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .light { background: #dcdcdc; }
+    .dark  { background: #6a8caf; }
+    .piece {
+      width: 70px;
+      height: 70px;
+      cursor: pointer;
+      user-select: none;
+    }
+    #status {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .highlight {
+      outline: 3px solid yellow;
+    }
+  </style>
+</head>
+<body>
+  <h1>♟ Échecs Icy Sea (sans librairie)</h1>
+  <div id="board"></div>
+  <div id="status"></div>
+
+  <script>
+    const board = document.getElementById("board");
+    const statusDiv = document.getElementById("status");
+
+    // Images des pièces
+    const pieces = {
+      'r': "https://images.chesscomfiles.com/chess-themes/pieces/icy_sea/150/br.png",
+      'n': "https://images.chesscomfiles.com/chess-themes/pieces/icy_sea/150/bn.png",
+      'b': "https://images.chesscomfiles.com/chess-themes/pieces/icy_sea/150/bb.png",
+      'q': "https://images.chesscomfiles.com/chess-themes/pieces/icy_sea/150/bq.png",
+      'k': "https://images.chesscomfiles.com/chess-themes/pieces/icy_sea/150/bk.png",
+      'p': "https://images.chesscomfiles.com/chess-themes/pieces/icy_sea/150/bp.png",
+      'R': "https://images.chesscomfiles.com/chess-themes/pieces/icy_sea/150/wr.png",
+      'N': "https://images.chesscomfiles.com/chess-themes/pieces/icy_sea/150/wn.png",
+      'B': "https://images.chesscomfiles.com/chess-themes/pieces/icy_sea/150/wb.png",
+      'Q': "https://images.chesscomfiles.com/chess-themes/pieces/icy_sea/150/wq.png",
+      'K': "https://images.chesscomfiles.com/chess-themes/pieces/icy_sea/150/wk.png",
+      'P': "https://images.chesscomfiles.com/chess-themes/pieces/icy_sea/150/wp.png",
+    };
+
+    // Plateau initial
+    let position = [
+      ["r","n","b","q","k","b","n","r"],
+      ["p","p","p","p","p","p","p","p"],
+      [".",".",".",".",".",".",".","."],
+      [".",".",".",".",".",".",".","."],
+      [".",".",".",".",".",".",".","."],
+      [".",".",".",".",".",".",".","."],
+      ["P","P","P","P","P","P","P","P"],
+      ["R","N","B","Q","K","B","N","R"]
+    ];
+
+    let turn = "w"; // w = blancs, b = noirs
+    let selected = null;
+
+    function renderBoard() {
+      board.innerHTML = "";
+      for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+          const square = document.createElement("div");
+          square.classList.add("square");
+          if ((row+col)%2===0) square.classList.add("light");
+          else square.classList.add("dark");
+
+          square.dataset.row = row;
+          square.dataset.col = col;
+
+          const piece = position[row][col];
+          if (piece !== ".") {
+            const img = document.createElement("img");
+            img.src = pieces[piece];
+            img.classList.add("piece");
+            img.dataset.piece = piece;
+            square.appendChild(img);
+          }
+          board.appendChild(square);
+        }
+      }
+
+      const state = getGameState();
+      statusDiv.textContent = state;
+    }
+
+    function isWhite(piece) { return piece === piece.toUpperCase(); }
+    function isBlack(piece) { return piece === piece.toLowerCase(); }
+    function opponent(turn) { return (turn==="w" ? "b" : "w"); }
+
+    function pathClear(r1,c1,r2,c2){
+      let dr = Math.sign(r2-r1);
+      let dc = Math.sign(c2-c1);
+      let r = r1+dr, c=c1+dc;
+      while (r!==r2 || c!==c2) {
+        if (position[r][c]!==".") return false;
+        r+=dr; c+=dc;
+      }
+      return true;
+    }
+
+    function isValidMove(fromRow, fromCol, toRow, toCol, piece, checkSafety=true) {
+      if (fromRow===toRow && fromCol===toCol) return false;
+      const dr = toRow - fromRow;
+      const dc = toCol - fromCol;
+      const target = position[toRow][toCol];
+
+      // Couleur
+      if (target !== ".") {
+        if (isWhite(piece) && isWhite(target)) return false;
+        if (isBlack(piece) && isBlack(target)) return false;
+      }
+
+      // Déplacements par type
+      if (piece==="P") { // pion blanc
+        if (dc===0 && target==="." && (dr===-1 || (dr===-2 && fromRow===6 && position[5][fromCol]==="."))) {}
+        else if (Math.abs(dc)===1 && dr===-1 && target!=="." && isBlack(target)) {}
+        else return false;
+      }
+      if (piece==="p") { // pion noir
+        if (dc===0 && target==="." && (dr===1 || (dr===2 && fromRow===1 && position[2][fromCol]==="."))) {}
+        else if (Math.abs(dc)===1 && dr===1 && target!=="." && isWhite(target)) {}
+        else return false;
+      }
+      if (piece.toLowerCase()==="r") {
+        if (!(dr===0 || dc===0)) return false;
+        if (!pathClear(fromRow, fromCol, toRow, toCol)) return false;
+      }
+      if (piece.toLowerCase()==="n") {
+        if (!((Math.abs(dr)===2 && Math.abs(dc)===1)||(Math.abs(dr)===1 && Math.abs(dc)===2))) return false;
+      }
+      if (piece.toLowerCase()==="b") {
+        if (Math.abs(dr)!==Math.abs(dc)) return false;
+        if (!pathClear(fromRow, fromCol, toRow, toCol)) return false;
+      }
+      if (piece.toLowerCase()==="q") {
+        if (!((dr===0||dc===0)||(Math.abs(dr)===Math.abs(dc)))) return false;
+        if (!pathClear(fromRow, fromCol, toRow, toCol)) return false;
+      }
+      if (piece.toLowerCase()==="k") {
+        if (Math.abs(dr)>1 || Math.abs(dc)>1) return false;
+      }
+
+      // Vérifie si le roi reste en sécurité après ce coup
+      if (checkSafety) {
+        const backup = JSON.parse(JSON.stringify(position));
+        position[toRow][toCol] = piece;
+        position[fromRow][fromCol] = ".";
+        const safe = !isKingInCheck(isWhite(piece)?"w":"b");
+        position = backup;
+        if (!safe) return false;
+      }
+
+      return true;
+    }
+
+    function findKing(color) {
+      for (let r=0;r<8;r++){
+        for (let c=0;c<8;c++){
+          let p=position[r][c];
+          if (p==="K" && color==="w") return [r,c];
+          if (p==="k" && color==="b") return [r,c];
+        }
+      }
+    }
+
+    function isKingInCheck(color) {
+      const [kr,kc]=findKing(color);
+      for (let r=0;r<8;r++){
+        for (let c=0;c<8;c++){
+          const p=position[r][c];
+          if (p===".") continue;
+          if ((color==="w"&&isBlack(p))||(color==="b"&&isWhite(p))){
+            if(isValidMove(r,c,kr,kc,p,false)) return true;
+          }
+        }
+      }
+      return false;
+    }
+
+    function hasAnyMove(color){
+      for(let r=0;r<8;r++){
+        for(let c=0;c<8;c++){
+          const p=position[r][c];
+          if(p===".") continue;
+          if((color==="w"&&isWhite(p))||(color==="b"&&isBlack(p))){
+            for(let rr=0;rr<8;rr++){
+              for(let cc=0;cc<8;cc++){
+                if(isValidMove(r,c,rr,cc,p,true)) return true;
+              }
+            }
+          }
+        }
+      }
+      return false;
+    }
+
+    function getGameState(){
+      if(isKingInCheck(turn)){
+        if(!hasAnyMove(turn)) return "Échec et mat ! "+(turn==="w"?"Blancs":"Noirs")+" perdent.";
+        return "Échec aux "+(turn==="w"?"Blancs":"Noirs");
+      } else {
+        if(!hasAnyMove(turn)) return "Pat ! Match nul.";
+        return "Au tour des "+(turn==="w"?"Blancs":"Noirs");
+      }
+    }
+
+    board.addEventListener("click",(e)=>{
+      const square=e.target.closest(".square");
+      if(!square) return;
+      const row=parseInt(square.dataset.row);
+      const col=parseInt(square.dataset.col);
+      const piece=position[row][col];
+
+      if(selected){
+        const [fromRow,fromCol,pieceSel]=selected;
+        if(isValidMove(fromRow,fromCol,row,col,pieceSel,true)){
+          // Promotion auto en reine
+          if((pieceSel==="P" && row===0)||(pieceSel==="p"&&row===7)){
+            position[row][col]=pieceSel==="P"?"Q":"q";
+          } else {
+            position[row][col]=pieceSel;
+          }
+          position[fromRow][fromCol]=".";
+          turn=opponent(turn);
+        }
+        selected=null;
+        renderBoard();
+      } else {
+        if(piece!=="." && ((turn==="w"&&isWhite(piece))||(turn==="b"&&isBlack(piece)))){
+          selected=[row,col,piece];
+          square.classList.add("highlight");
+        }
+      }
+    });
+
+    renderBoard();
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newsletter</title>
+  <link rel="stylesheet" href="infos.css">
+</head>
+<body>
+  <header>📰 Newsletter</header>
+  <nav>
+    <a href="../index.html">🏠 Accueil</a>
+    <a href="../bots.html">🤖 Robots</a>
+    <a href="../problemes.html">🗂️ Explorateur</a>
+    <a href="../tournoi/tournoi.html">🏆 Tournois</a>
+  </nav>
+
+<div id="main-section" class="section">
+  <h2>Dernières nouvelles</h2>
+
+  <!-- Barre de filtre / recherche -->
+  <div class="news-filters">
+    <input type="text" id="search-input" placeholder="🔍 Rechercher une news...">
+    <select id="badge-filter">
+      <option value="">-- Filtrer par badge --</option>
+      <option value="Échec">Échec</option>
+      <option value="Tournoi">Tournoi</option>
+      <option value="Exclusif">Exclusif</option>
+      <option value="Actu">Actu</option>
+    </select>
+    <select id="sort-filter">
+      <option value="newest">Date: plus récent → ancien</option>
+      <option value="oldest">Date: plus ancien → récent</option>
+    </select>
+  </div>
+
+  <div id="news-container" class="news-grid"></div>
+</div>
+
+  <!-- Page article (masquée au départ) -->
+  <div id="details-page" class="details-page">
+    <div class="details-header">
+      <button class="back-btn">← Retour</button>
+      <img id="details-image" src="" alt="Image Article">
+    </div>
+    <div class="details-content">
+      <h2 id="details-title"></h2>
+      <p id="details-text"></p>
+    </div>
+  </div>
+
+  <script src="newsData.js"></script>
+  <script src="newsContent.js"></script>
+  <script src="infos.js"></script>
+</body>
+</html>

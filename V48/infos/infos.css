@@ -1,0 +1,316 @@
+body { 
+    font-family: 'Georgia', serif;
+    background:#f4f1ea;
+    color:#2b2b2b;
+    margin:0;
+}
+header { 
+    text-align:center;
+    padding:1rem;
+    font-size:2.2rem;
+    font-weight:bold;
+    color:#222;
+    background:#eae7dc;
+    border-bottom:4px double #444;
+}
+nav { 
+    background:#333;
+    padding:1rem;
+    text-align:center;
+}
+nav a { 
+    color:#f9f9f9;
+    margin:0 1rem;
+    text-decoration:none;
+    font-weight:bold;
+    font-family: Arial, sans-serif;
+}
+nav a:hover { 
+    color:#298be6;
+}
+.section { 
+    max-width:1200px;
+    margin:2rem auto;
+    padding:1rem;
+}
+.section h2 {
+    text-align:center;
+    font-size:1.8rem;
+    margin-bottom:2rem;
+    border-bottom:2px solid #555;
+    display:inline-block;
+}
+
+/* --- Grille de news façon journal --- */
+.news-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1.5rem;
+}
+
+/* Carte style "journal" */
+.news-card {
+  background:#fff;
+  border:2px solid #000;
+  border-radius:4px;
+  overflow:hidden;
+  box-shadow:4px 4px 0 #000;
+  transition:transform 0.2s, box-shadow 0.2s;
+  position:relative;
+
+  display:flex;
+  flex-direction:column;
+  height:350px; /* hauteur fixe pour toutes les cartes */
+}
+.news-card:hover {
+  transform:translateY(-5px);
+  box-shadow:6px 6px 0 #000;
+}
+
+.news-header {
+  position:relative;
+  border-bottom:1px solid #000;
+  flex-shrink:0;
+}
+.news-header img {
+  width:100%;
+  height:150px; /* image uniforme */
+  object-fit:cover;
+}
+
+.news-badges {
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.4rem;
+}
+.badge {
+  background:#000;
+  color:#fff;
+  padding:0.2rem 0.6rem;
+  border-radius:2px;
+  font-size:0.75rem;
+  font-weight:bold;
+  text-transform:uppercase;
+}
+.new-tag {
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:#e63946;
+  color:white;
+  padding:0.3rem 0.7rem;
+  border-radius:2px;
+  font-weight:bold;
+  font-size:0.8rem;
+  text-transform:uppercase;
+}
+
+.news-body {
+  padding:1rem;
+  flex:1; /* occupe tout l’espace restant */
+  display:flex;
+  flex-direction:column;
+}
+
+.news-body h3 {
+  margin:0 0 0.5rem 0;
+  font-size:1.4rem;
+  font-weight:bold;
+  border-bottom:1px dashed #444;
+  padding-bottom:0.3rem;
+  margin-bottom:0.5rem;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+}
+
+.news-body p {
+  flex:1; /* occupe l’espace pour pousser le bouton vers le bas */
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  margin:0;
+  font-size:0.95rem;
+  line-height:1.4;
+}
+
+.news-body button {
+  margin-top:auto; /* pousse le bouton en bas */
+  padding:0.4rem 0.8rem;
+  background:#222;
+  border:none;
+  color:#fff;
+  font-weight:bold;
+  font-family:Arial, sans-serif;
+  font-size:0.9rem;
+  border-radius:3px;
+  cursor:pointer;
+  transition:background 0.3s;
+}
+.news-body button:hover {
+  background:#444;
+}
+
+
+/* --- Page article --- */
+.details-page {
+  display:none;
+  animation:fadeIn 0.4s ease;
+}
+
+.details-header {
+  position:relative;
+}
+.details-header img {
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  border-bottom:3px solid #000;
+}
+.back-btn {
+  position:absolute;
+  top:15px;
+  left:15px;
+  background:rgba(255,255,255,0.9);
+  border:2px solid #000;
+  padding:6px 12px;
+  cursor:pointer;
+  font-size:1rem;
+  font-weight:bold;
+  border-radius:3px;
+}
+.back-btn:hover {
+  background:#ddd;
+}
+
+.details-content {
+  padding:20px;
+  background:#fff;
+  border-left:2px solid #000;
+  border-right:2px solid #000;
+  border-bottom:2px solid #000;
+  box-shadow:4px 4px 0 #000;
+}
+.details-content h2 {
+  font-size:1.8rem;
+  margin-bottom:1rem;
+}
+.details-content p {
+  font-size:1rem;
+  line-height:1.6;
+}
+
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+
+/* Barre filtre / recherche */
+.news-filters {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  margin-bottom:20px;
+}
+
+/* Champ texte et selects */
+.news-filters input,
+.news-filters select {
+  padding:0.5rem 1rem;
+  border:2px solid #000;
+  border-radius:4px;
+  background:#fff;
+  font-family:'Georgia', serif;
+  font-size:1rem;
+  outline:none;
+  box-shadow:4px 4px 0 #000;
+  transition:transform 0.2s, box-shadow 0.2s, background 0.2s;
+  cursor:pointer;
+}
+
+/* Effet hover */
+.news-filters input:hover,
+.news-filters select:hover {
+  transform:translateY(-2px);
+  box-shadow:6px 6px 0 #000;
+  background:#f4f1ea;
+}
+
+/* Placeholder plus subtil */
+.news-filters input::placeholder {
+  color:#888;
+  font-style:italic;
+}
+
+
+.details-content table {
+  width:100%;
+  border-collapse:collapse;
+  margin:1rem 0;
+}
+.details-content th, .details-content td {
+  border:1px solid #000;
+  padding:0.5rem;
+  text-align:left;
+}
+.details-content th {
+  background:#eae7dc;
+}
+
+
+/* --- Bloc copiable --- */
+.copy-block {
+  border: 2px solid #000;
+  background: #f9f9f0;
+  padding: 0.8rem;
+  margin: 1rem 0;
+  position: relative;
+  font-family: 'Courier New', monospace;
+  border-radius: 4px;
+}
+
+.copy-block pre {
+  margin: 0;
+  white-space: pre-wrap; /* garde les retours à la ligne */
+  word-break: break-word;
+}
+
+.copy-block .copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border: none;
+  background: #222;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background 0.3s;
+}
+
+.copy-block .copy-btn:hover {
+  background: #444;
+}
+
+/* --- Bloc iframe --- */
+.iframe-block {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.iframe-block iframe {
+  width: 100%;
+  max-width: 600px;
+  height: 350px;
+  border: 2px solid #000;
+  border-radius: 4px;
+}

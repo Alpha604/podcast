@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "Science et découverte",
+    "author": "Dr. Martin Dubois",
+    "description": "Explorez les mystères de l'univers et les dernières avancées scientifiques.",
+    "image": "images/science.jpg",
+    "audio": "audio/science.mp3",
+    "category": "Science"
+  },
+  {
+    "id": 2,
+    "title": "Histoires de voyage",
+    "author": "Sophie Martin",
+    "description": "Des récits captivants de voyages aux quatre coins du monde.",
+    "image": "images/voyage.jpg",
+    "audio": "audio/voyage.mp3",
+    "category": "Voyage"
+  },
+  {
+    "id": 3,
+    "title": "Entrepreneuriat 360",
+    "author": "Thomas Leroy",
+    "description": "Conseils et stratégies pour développer votre entreprise.",
+    "image": "images/business.jpg",
+    "audio": "audio/business.mp3",
+    "category": "Business"
+  },
+  {
+    "id": 4,
+    "title": "Culture Pop Actuelle",
+    "author": "Emma et Lucas",
+    "description": "L'actualité des séries, films et musique décryptée.",
+    "image": "images/culture.jpg",
+    "audio": "audio/culture.mp3",
+    "category": "Divertissement"
+  },
+  {
+    "id": 5,
+    "title": "Épanouissement personnel",
+    "author": "Dr. Isabelle Moreau",
+    "description": "Des conseils pour améliorer votre bien-être au quotidien.",
+    "image": "images/development.jpg",
+    "audio": "audio/development.mp3",
+    "category": "Développement personnel"
+  },
+  {
+    "id": 6,
+    "title": "Les grandes heures de l'Histoire",
+    "author": "Prof. Jean Lefebvre",
+    "description": "Revivez les événements marquants de notre histoire.",
+    "image": "images/history.jpg",
+    "audio": "audio/history.mp3",
+    "category": "Histoire"
+  }
+]

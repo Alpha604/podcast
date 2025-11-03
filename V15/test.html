@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les petits micros - Votre plateforme audio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --accent: #fd79a8;
+            --gray: #636e72;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark), #1a1a2e);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(45, 52, 54, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 8px 15px;
+            width: 250px;
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            width: 100%;
+            padding: 5px 10px;
+            outline: none;
+        }
+
+        .search-bar i {
+            color: var(--gray);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: radial-gradient(circle at top right, rgba(108, 92, 231, 0.2), transparent 50%),
+                        radial-gradient(circle at bottom left, rgba(253, 121, 168, 0.2), transparent 50%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--secondary);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        /* Podcast Section */
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .podcasts {
+            padding: 80px 0;
+        }
+
+        .podcast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .podcast-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .podcast-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .podcast-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .podcast-info {
+            padding: 20px;
+        }
+
+        .podcast-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+
+        .podcast-author {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .podcast-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .podcast-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .podcast-duration {
+            color: var(--secondary);
+            font-size: 0.85rem;
+        }
+
+        .play-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .play-button:hover {
+            background: var(--accent);
+        }
+
+        /* Filtres */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+        }
+
+        /* Audio Player */
+        .audio-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(45, 52, 54, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+        }
+
+        .player-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            width: 30%;
+            min-width: 250px;
+        }
+
+        .player-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: var(--dark);
+        }
+
+        .player-text h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .player-text p {
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+
+        .player-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 40%;
+            min-width: 350px;
+        }
+
+        .control-buttons {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+
+        .control-buttons button {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 10px;
+        }
+
+        .control-buttons button:hover {
+            color: var(--accent);
+        }
+
+        .play-pause {
+            background: var(--primary) !important;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-pause:hover {
+            background: var(--accent) !important;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            width: 0%;
+        }
+
+        .time {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .player-extra {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            width: 30%;
+            min-width: 200px;
+            justify-content: flex-end;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .volume-slider {
+            width: 120px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .volume-level {
+            position: absolute;
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 10px;
+            width: 70%;
+        }
+
+        /* Categories */
+        .categories {
+            padding: 80px 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            background: rgba(108, 92, 231, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .category-card h3 {
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column a:hover {
+            color: var(--accent);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .player-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .player-info, .player-controls, .player-extra {
+                width: 100%;
+            }
+
+            .player-info {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .player-extra {
+                justify-content: center;
+            }
+
+            .podcast-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .control-buttons {
+                gap: 15px;
+            }
+
+            .play-pause {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .podcast-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .player-info, .player-controls, .player-extra {
+                min-width: 100%;
+            }
+
+            .player-controls {
+                min-width: 100%;
+            }
+
+            .control-buttons button {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-podcast"></i>
+                    <span>Les Petits Micros</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-section="home">Accueil</a></li>
+                        <li><a href="#" class="nav-link" data-section="podcasts">Découvrir</a></li>
+                        <li><a href="#" class="nav-link" data-section="categories">Catégories</a></li>
+                        <li><a href="#" class="nav-link" data-section="about">À propos</a></li>
+                    </ul>
+                </nav>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher un podcast..." id="searchInput">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home-section">
+        <div class="container">
+            <h1>Plongez dans l'univers des podcasts</h1>
+            <p>Découvrez des milliers de podcasts sur tous les sujets qui vous passionnent. Science, histoire, fiction, développement personnel... Il y en a pour tous les goûts !</p>
+            <a href="#" class="cta-button" id="exploreButton">Explorer maintenant</a>
+        </div>
+    </section>
+
+    <!-- Podcasts Section -->
+    <section class="podcasts" id="podcasts-section">
+        <div class="container">
+            <h2 class="section-title">Podcasts populaires</h2>
+            
+            <!-- Filtres -->
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="Science">Science</button>
+                <button class="filter-btn" data-filter="Voyage">Voyage</button>
+                <button class="filter-btn" data-filter="Business">Business</button>
+                <button class="filter-btn" data-filter="Divertissement">Divertissement</button>
+                <button class="filter-btn" data-filter="Développement personnel">Développement</button>
+                <button class="filter-btn" data-filter="Histoire">Histoire</button>
+            </div>
+            
+            <div class="podcast-grid" id="podcastGrid">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i> Chargement des podcasts...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories-section">
+        <div class="container">
+            <h2 class="section-title">Catégories</h2>
+            <div class="category-grid">
+                <div class="category-card" data-category="Science">
+                    <div class="category-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>Science</h3>
+                </div>
+                <div class="category-card" data-category="Voyage">
+                    <div class="category-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h3>Voyage</h3>
+                </div>
+                <div class="category-card" data-category="Business">
+                    <div class="category-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Business</h3>
+                </div>
+                <div class="category-card" data-category="Divertissement">
+                    <div class="category-icon">
+                        <i class="fas fa-theater-masks"></i>
+                    </div>
+                    <h3>Divertissement</h3>
+                </div>
+                <div class="category-card" data-category="Développement personnel">
+                    <div class="category-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Développement</h3>
+                </div>
+                <div class="category-card" data-category="Histoire">
+                    <div class="category-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3>Histoire</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="podcasts" id="about-section" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">À propos de SuperPodcasts</h2>
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px;">
+                    SuperPodcasts est la plateforme ultime pour découvrir et écouter vos podcasts préférés. 
+                    Nous proposons une vaste sélection de contenus audio sur tous les sujets, des dernières 
+                    découvertes scientifiques aux récits de voyage en passant par le développement personnel.
+                </p>
+                <p style="font-size: 1.1rem; line-height: 1.6;">
+                    Notre mission est de rendre l'accès aux podcasts simple, agréable et personnalisé. 
+                    Que vous soyez un auditeur occasionnel ou un passionné, vous trouverez toujours 
+                    du contenu qui vous intéresse sur notre plateforme.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio Player -->
+    <div class="audio-player" id="audioPlayer">
+        <div class="player-content">
+            <div class="player-info">
+                <img src="" alt="Podcast en cours" class="player-image" id="playerImage" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiByeD0iMTAiIGZpbGw9IiM2QzVDRTciLz4KPHBhdGggZD0iTTM1IDI4VjUyTDUyIDQwTDM1IDI4WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+'">
+                <div class="player-text">
+                    <h3 id="playerTitle">Sélectionnez un podcast</h3>
+                    <p id="playerAuthor">Auteur</p>
+                </div>
+            </div>
+            <div class="player-controls">
+                <div class="control-buttons">
+                    <button id="prevButton"><i class="fas fa-step-backward"></i></button>
+                    <button class="play-pause" id="playPauseButton">
+                        <i class="fas fa-play" id="playIcon"></i>
+                    </button>
+                    <button id="nextButton"><i class="fas fa-step-forward"></i></button>
+                </div>
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                <div class="time">
+                    <span id="currentTime">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
+            </div>
+            <div class="player-extra">
+                <div class="volume-control">
+                    <i class="fas fa-volume-up"></i>
+                    <div class="volume-slider" id="volumeSlider">
+                        <div class="volume-level" id="volumeLevel"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>SuperPodcasts</h3>
+                    <p>La plateforme ultime pour découvrir et écouter vos podcasts préférés.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-spotify"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="#" class="nav-link" data-section="home">Accueil</a></li>
+                        <li><a href="#" class="nav-link" data-section="podcasts">Découvrir</a></li>
+                        <li><a href="#" class="nav-link" data-section="categories">Catégories</a></li>
+                        <li><a href="#" class="nav-link" data-section="about">À propos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Légal</h3>
+                    <ul>
+                        <li><a href="#">Conditions d'utilisation</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                        <li><a href="#">Mentions légales</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:contact@superpodcasts.com">contact@superpodcasts.com</a></li>
+                        <li><a href="#">Support technique</a></li>
+                        <li><a href="#">Devenir podcasteur</a></li>
+                        <li><a href="#">Publicité</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 SuperPodcasts. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Audio Element -->
+    <audio id="audioElement"></audio>
+
+    <!-- Script pour charger les données des podcasts -->
+    <script src="podcasts-data.js"></script>
+
+    <script>
+        // Éléments DOM
+        const podcastGrid = document.getElementById('podcastGrid');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioElement = document.getElementById('audioElement');
+        const playPauseButton = document.getElementById('playPauseButton');
+        const playIcon = document.getElementById('playIcon');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const progressBar = document.getElementById('progressBar');
+        const progress = document.getElementById('progress');
+        const currentTimeElement = document.getElementById('currentTime');
+        const durationElement = document.getElementById('duration');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeLevel = document.getElementById('volumeLevel');
+        const playerImage = document.getElementById('playerImage');
+        const playerTitle = document.getElementById('playerTitle');
+        const playerAuthor = document.getElementById('playerAuthor');
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const exploreButton = document.getElementById('exploreButton');
+        const categoryCards = document.querySelectorAll('.category-card');
+
+        // Variables globales
+        let podcasts = [];
+        let currentPodcastIndex = 0;
+        let isPlaying = false;
+        let updateInterval;
+        let currentFilter = 'all';
+
+        // Charger les données depuis le fichier JS externe
+        function loadPodcasts() {
+            try {
+                // Les données sont maintenant disponibles via la variable globale PODCASTS_DATA
+                // définie dans le fichier podcasts-data.js
+                if (typeof PODCASTS_DATA !== 'undefined') {
+                    podcasts = PODCASTS_DATA;
+                    displayPodcasts(podcasts);
+                } else {
+                    throw new Error('Données des podcasts non disponibles');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                podcastGrid.innerHTML = '<div class="loading">Erreur lors du chargement des podcasts. Vérifiez que le fichier podcasts-data.js existe.</div>';
+            }
+        }
+
+        // Afficher les podcasts
+        function displayPodcasts(podcastsToDisplay) {
+            if (podcastsToDisplay.length === 0) {
+                podcastGrid.innerHTML = '<div class="loading">Aucun podcast trouvé.</div>';
+                return;
+            }
+
+            podcastGrid.innerHTML = podcastsToDisplay.map(podcast => `
+                <div class="podcast-card" data-category="${podcast.category}">
+                    <img src="${podcast.image}" alt="${podcast.title}" class="podcast-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiByeD0iMTUiIGZpbGw9IiM2QzVDRTciLz4KPHBhdGggZD0iTTEyNSA4NVYxMTVMMTU1IDEwMEwxMjUgODVaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K'">
+                    <div class="podcast-info">
+                        <h3 class="podcast-title">${podcast.title}</h3>
+                        <p class="podcast-author">${podcast.author}</p>
+                        <p class="podcast-description">${podcast.description}</p>
+                        <div class="podcast-meta">
+                            <span class="podcast-duration">${podcast.duration}</span>
+                            <button class="play-button" data-id="${podcast.id}">
+                                <i class="fas fa-play"></i> Écouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Ajouter les écouteurs d'événements aux boutons de lecture
+            document.querySelectorAll('.play-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const podcastId = parseInt(this.getAttribute('data-id'));
+                    playPodcast(podcastId);
+                });
+            });
+        }
+
+        // Filtrer les podcasts par catégorie
+        function filterPodcasts(category) {
+            currentFilter = category;
+            
+            // Mettre à jour les boutons de filtre
+            filterButtons.forEach(btn => {
+                if (btn.getAttribute('data-filter') === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            if (category === 'all') {
+                displayPodcasts(podcasts);
+            } else {
+                const filteredPodcasts = podcasts.filter(podcast => podcast.category === category);
+                displayPodcasts(filteredPodcasts);
+            }
+        }
+
+        // Jouer un podcast
+        function playPodcast(podcastId) {
+            const podcastIndex = podcasts.findIndex(p => p.id === podcastId);
+            if (podcastIndex === -1) return;
+
+            currentPodcastIndex = podcastIndex;
+            const podcast = podcasts[podcastIndex];
+
+            // Mettre à jour l'interface du lecteur
+            playerImage.src = podcast.image;
+            playerTitle.textContent = podcast.title;
+            playerAuthor.textContent = podcast.author;
+
+            // Charger et jouer l'audio
+            audioElement.src = podcast.audio;
+            audioElement.load();
+            playAudio();
+
+            // Afficher le lecteur
+            audioPlayer.style.display = 'block';
+
+            // Mettre à jour la barre de progression
+            updateProgress();
+        }
+
+        // Lecture/Pause
+        function playAudio() {
+            if (audioElement.paused) {
+                audioElement.play();
+                isPlaying = true;
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+                
+                // Mettre à jour la progression régulièrement
+                updateInterval = setInterval(updateProgress, 1000);
+            } else {
+                audioElement.pause();
+                isPlaying = false;
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+                
+                clearInterval(updateInterval);
+            }
+        }
+
+        // Mettre à jour la barre de progression
+        function updateProgress() {
+            if (audioElement.duration) {
+                const percent = (audioElement.currentTime / audioElement.duration) * 100;
+                progress.style.width = `${percent}%`;
+                
+                currentTimeElement.textContent = formatTime(audioElement.currentTime);
+                durationElement.textContent = formatTime(audioElement.duration);
+            }
+        }
+
+        // Formater le temps (secondes en mm:ss)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Recherche de podcasts
+        function searchPodcasts() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredPodcasts = podcasts.filter(podcast => 
+                podcast.title.toLowerCase().includes(searchTerm) ||
+                podcast.author.toLowerCase().includes(searchTerm) ||
+                podcast.description.toLowerCase().includes(searchTerm)
+            );
+            displayPodcasts(filteredPodcasts);
+        }
+
+        // Navigation entre les sections
+        function navigateToSection(section) {
+            // Masquer toutes les sections
+            document.getElementById('home-section').style.display = 'none';
+            document.getElementById('podcasts-section').style.display = 'none';
+            document.getElementById('categories-section').style.display = 'none';
+            document.getElementById('about-section').style.display = 'none';
+            
+            // Afficher la section sélectionnée
+            document.getElementById(`${section}-section`).style.display = 'block';
+            
+            // Mettre à jour la navigation
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-section') === section) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            // Faire défiler vers le haut
+            window.scrollTo(0, 0);
+        }
+
+        // Événements
+        playPauseButton.addEventListener('click', playAudio);
+
+        prevButton.addEventListener('click', function() {
+            currentPodcastIndex = currentPodcastIndex > 0 ? currentPodcastIndex - 1 : podcasts.length - 1;
+            playPodcast(podcasts[currentPodcastIndex].id);
+        });
+
+        nextButton.addEventListener('click', function() {
+            currentPodcastIndex = currentPodcastIndex < podcasts.length - 1 ? currentPodcastIndex + 1 : 0;
+            playPodcast(podcasts[currentPodcastIndex].id);
+        });
+
+        progressBar.addEventListener('click', function(e) {
+            if (!audioElement.duration) return;
+            
+            const rect = progressBar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audioElement.currentTime = percent * audioElement.duration;
+            updateProgress();
+        });
+
+        volumeSlider.addEventListener('click', function(e) {
+            const rect = volumeSlider.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            volumeLevel.style.width = `${percent * 100}%`;
+            audioElement.volume = percent;
+        });
+
+        searchInput.addEventListener('input', searchPodcasts);
+
+        // Filtres
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+                filterPodcasts(filter);
+            });
+        });
+
+        // Navigation
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = this.getAttribute('data-section');
+                navigateToSection(section);
+            });
+        });
+
+        // Bouton explorer
+        exploreButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            navigateToSection('podcasts');
+        });
+
+        // Catégories
+        categoryCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                navigateToSection('podcasts');
+                setTimeout(() => {
+                    filterPodcasts(category);
+                }, 100);
+            });
+        });
+
+        // Lorsque l'audio se termine
+        audioElement.addEventListener('ended', function() {
+            // Passer au podcast suivant
+            nextButton.click();
+        });
+
+        // Initialisation
+        loadPodcasts();
+    </script>
+</body>
+</html>
